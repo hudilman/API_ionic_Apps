@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Membuat Notifikasi Suara Menggunakan jQuery</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div style='margin:0 auto;width:600px;padding:10px;'>
+
+        <div id='kotakChat' style='margin:20px auto 0 auto'>
+
+            <h3>Online Chat</h3>
+
+            <div id='chat'>
+
+                <ul id='pesanChat'>
+
+                    <li>
+
+                        <img src="https://img.icons8.com/plasticine/2x/user.png" />
+
+                        <span>Hallo, Selamat Datang !</span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <input type="text" id="dataChat" placeholder="Pesan" />
+
+            <input type="button" value="Kirim" id="kirim" />
+
+        </div>
+
+    </div>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#dataChat").focus();
+
+        $('<audio id="chatAudio"><source src="notifikasi.ogg" type="audio/ogg"><source src="notifikasi.mp3" type="audio/mpeg"><source src="notifikasi.wav" type="audio/wav"></audio>')
+            .appendTo('body');
+
+        $("#kirim").on("click", function () {
+
+            var a = $("#dataChat").val().trim();
+
+            if (a.length > 0) {
+
+                $("#dataChat").val('');
+
+                $("#dataChat").focus();
+
+                $("<li></li>").html('<img src="https://img.icons8.com/plasticine/2x/user.png"/><span>' +
+                    a + '</span>').appendTo("#pesanChat");
+
+                $("#chat").animate({
+                    "scrollTop": $('#chat')[0].scrollHeight
+                }, "slow");
+
+                responsiveVoice.speak(
+                    a,
+                    "Japanese Female", {
+                        pitch: 1,
+                        rate: 1,
+                        volume: 1
+                    }
+                );
+
+            }
+
+        });
+
+    });
+</script>
+</html>
